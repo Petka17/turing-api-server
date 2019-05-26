@@ -10,12 +10,18 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "precommit": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "eslint",
       "prettier --write",
+      "eslint",
       "git add"
     ]
   },

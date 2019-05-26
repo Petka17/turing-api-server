@@ -9,6 +9,13 @@ app.get(
   }
 );
 
+app.get(
+  "/hello/:name",
+  (req, res): void => {
+    res.send(`Hello ${req.params["name"]}`);
+  }
+);
+
 app.listen(
   3000,
   (): void => {
