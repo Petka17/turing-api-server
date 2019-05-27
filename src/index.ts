@@ -2,9 +2,9 @@ import express from "express";
 import ApiServer from "./utils/api-server";
 import controllers from "./controllers";
 
-const server: ApiServer<express.Express> = new ApiServer(express);
+const apiServer: ApiServer<express.Express> = new ApiServer(express);
 
-server.initRoutes(controllers);
+apiServer.initRoutes(controllers);
 
 /* istanbul ignore next */
 if (require.main === module) {
@@ -12,9 +12,20 @@ if (require.main === module) {
    * Run this code only if the file is launched directly from command-line
    */
   const main = async (): Promise<string> => {
-    await server.start();
+    await apiServer.start();
 
-    return server.status();
+    const graceful = async (): Promise<void> => {
+      console.info("\nStopping...");
+      await apiServer.stop();
+      console.info("Done");
+      process.exit(0);
+    };
+
+    // Stop graceful
+    process.on("SIGTERM", graceful);
+    process.on("SIGINT", graceful);
+
+    return apiServer.status();
   };
 
   main()
@@ -22,4 +33,4 @@ if (require.main === module) {
     .catch(console.error);
 }
 
-export default server;
+export default apiServer;
