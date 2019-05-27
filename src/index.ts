@@ -1,24 +1,25 @@
 import express from "express";
+import ApiServer from "./utils/api-server";
+import controllers from "./controllers";
 
-const app: express.Express = express();
+const server: ApiServer<express.Express> = new ApiServer(express);
 
-app.get(
-  "/hello",
-  (_, res): void => {
-    res.send("Hello");
-  }
-);
+server.initRoutes(controllers);
 
-app.get(
-  "/hello/:name",
-  (req, res): void => {
-    res.send(`Hello ${req.params["name"]}`);
-  }
-);
+/* istanbul ignore next */
+if (require.main === module) {
+  /**
+   * Run this code only if the file is launched directly from command-line
+   */
+  const main = async (): Promise<string> => {
+    await server.start();
 
-app.listen(
-  3000,
-  (): void => {
-    console.log("Server started");
-  }
-);
+    return server.status();
+  };
+
+  main()
+    .then(console.info)
+    .catch(console.error);
+}
+
+export default server;
