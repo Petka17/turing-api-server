@@ -2,14 +2,13 @@ import axios from "axios";
 
 import server from "..";
 
-const host = "localhost";
 const port = 4000;
 
-const url = `http://${host}:${port}`;
+const url = `http://localhost:${port}`;
 
 beforeAll(
   async (done): Promise<void> => {
-    server.config(port);
+    server.configPort(port);
     await server.start();
     done();
   }

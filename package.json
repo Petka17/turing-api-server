@@ -8,11 +8,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "tsc",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "start:dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node build/index.js"
   },
   "husky": {
     "hooks": {

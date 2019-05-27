@@ -4,17 +4,17 @@ import http from "http";
 
 import ApiServer from "../api-server";
 
-const host = "localhost";
 const port = 4000;
 
-const url = `http://${host}:${port}`;
+const url = `http://localhost:${port}`;
 
 test.only("Check server start/stop", async (done): Promise<void> => {
-  const server: ApiServer<http.Server> = new ApiServer(http.createServer);
+  const server: ApiServer<http.Server> = new ApiServer(
+    http.createServer(),
+    port
+  );
 
-  server.config();
-  server.config(port);
-  server.config(port, host);
+  server.configPort(port);
 
   server.initRoutes([(): void => {}]);
 
@@ -22,7 +22,7 @@ test.only("Check server start/stop", async (done): Promise<void> => {
 
   await server.start();
   expect(server.status()).toEqual(`Server listening to ${url}`);
-  expect(await tcpPortUsed.check(port, host)).toBe(true);
+  expect(await tcpPortUsed.check(port, "localhost")).toBe(true);
 
   await server.stop();
   expect(server.status()).toEqual("Server is stopped");
