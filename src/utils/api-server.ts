@@ -5,7 +5,6 @@ import http from "http";
  * @description This realization is framework agnostic.
  */
 class ApiServer<T> {
-  private host: string;
   private port: number;
 
   private app: T;
@@ -15,17 +14,10 @@ class ApiServer<T> {
    * Create new server
    * @param appInit application with routes
    * @param port a port to listen to
-   * @param host a hostname to listen to
    */
-  public constructor(
-    appInit: () => T,
-    port: number = 3000,
-    host: string = "localhost"
-  ) {
+  public constructor(app: T, port: number) {
     this.port = port;
-    this.host = host;
-
-    this.app = appInit();
+    this.app = app;
     this.server = http.createServer(this.app);
   }
 
@@ -34,19 +26,17 @@ class ApiServer<T> {
    */
   public status(): string {
     if (this.isListening()) {
-      return `Server listening to http://${this.host}:${this.port}`;
+      return `Server listening to http://localhost:${this.port}`;
     }
     return "Server is stopped";
   }
 
   /**
-   * Config base connection params
+   * Config port
    * @param port
-   * @param host
    */
-  public config(port?: number, host?: string): void {
-    if (typeof port === "number") this.port = port;
-    if (typeof host === "string") this.host = host;
+  public configPort(port: number): void {
+    this.port = port;
   }
 
   /**
@@ -75,7 +65,7 @@ class ApiServer<T> {
           }
         );
 
-        this.server.listen(this.port, this.host);
+        this.server.listen(this.port);
       }
     );
   }
@@ -84,18 +74,9 @@ class ApiServer<T> {
    * Stop HTTP Server
    * @description before stop check if the server is running
    */
-  public stop(): Promise<void> {
-    return new Promise<void>(
-      (resolve): void => {
-        if (this.isListening())
-          this.server.close(
-            (): void => {
-              resolve();
-            }
-          );
-        else resolve();
-      }
-    );
+  public stop(): void {
+    // TODO: Add check for error during the close phase
+    if (this.isListening()) this.server.close();
   }
 
   /**
