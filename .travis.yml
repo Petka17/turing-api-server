@@ -4,7 +4,7 @@ node_js:
   - "10.15.1"
 branches:
   only:
-    - add-travis-ci
+    - master
 cache:
   directories:
     - node_modules
