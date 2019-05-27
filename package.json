@@ -11,7 +11,8 @@
     "build": "tsc",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts",
-    "precommit": ""
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "husky": {
     "hooks": {
