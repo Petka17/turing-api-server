@@ -1,14 +1,17 @@
-FROM node:10.15.1
+FROM node:10.15.1-slim
 
-WORKDIR /usr/app
+WORKDIR /usr/src
+RUN chown node:node -R /usr/src
 
-COPY yarn.lock .
-COPY package.json .
+USER node
+
+COPY --chown=node:node yarn.lock .
+COPY --chown=node:node package.json .
 
 RUN yarn
 
-COPY tsconfig.json .
-COPY src src
+COPY --chown=node:node tsconfig.json .
+COPY --chown=node:node src src
 
 RUN yarn build
 
