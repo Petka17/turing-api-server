@@ -1,10 +1,10 @@
 import {
-  ObjectType,
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
+  Entity,
+  JoinColumn,
   ManyToOne,
-  JoinColumn
+  ObjectType,
+  PrimaryGeneratedColumn
 } from "typeorm";
 
 import Department from "./department";
@@ -29,11 +29,11 @@ export default class Category {
   public name?: string;
 
   @Column("varchar", { length: 1000, nullable: true })
-  public description?: number;
+  public description?: string;
 
   @ManyToOne(
     (): ObjectType<Department> => Department,
-    (dep: Department): Category | undefined => dep.category
+    (dep: Department): Category[] | undefined => dep.category
   )
   @JoinColumn({ name: "department_id" })
   public department?: Department;

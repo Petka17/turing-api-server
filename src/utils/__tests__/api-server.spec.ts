@@ -1,6 +1,5 @@
-import tcpPortUsed from "tcp-port-used";
-
 import http from "http";
+import tcpPortUsed from "tcp-port-used";
 
 import ApiServer from "../api-server";
 

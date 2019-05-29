@@ -1,9 +1,9 @@
 import {
-  ObjectType,
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  OneToMany
+  Entity,
+  ObjectType,
+  OneToMany,
+  PrimaryGeneratedColumn
 } from "typeorm";
 
 import Category from "./category";
@@ -26,12 +26,12 @@ export default class Department {
   public name?: string;
 
   @Column("varchar", { length: 1000, nullable: true })
-  public description?: number;
+  public description?: string;
 
   @OneToMany(
     (): ObjectType<Category> => Category,
     (cat: Category): Department | undefined => cat.department,
     { cascade: ["remove"] }
   )
-  public category?: Category;
+  public category?: Category[];
 }
