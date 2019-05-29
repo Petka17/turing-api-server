@@ -1,6 +1,9 @@
 import express from "express";
-import ApiServer from "./utils/api-server";
+import { createConnection } from "typeorm";
+
 import controllers from "./controllers";
+import Department from "./database/models/department";
+import ApiServer from "./utils/api-server";
 
 const port = Number(process.env.PORT) || 4000;
 
@@ -40,12 +43,23 @@ termSignals.forEach(
 );
 
 /* istanbul ignore next */
+const main = async (): Promise<string> => {
+  const dep: Department = new Department();
+  dep.name = "Test3";
+  dep.description = "description";
+  const connection = await createConnection();
+  try {
+    await connection.manager.save(dep);
+  } catch (e) {}
+  return await apiServer.start();
+};
+
+/* istanbul ignore next */
 if (require.main === module) {
   /**
    * Run this code only if the file is launched directly from command-line
    */
-  apiServer
-    .start()
+  main()
     .then(console.info)
     .catch(console.error);
 }
