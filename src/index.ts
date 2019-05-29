@@ -5,8 +5,6 @@ import express from "express";
 import controllers from "./controllers";
 import ApiServer from "./utils/api-server";
 
-import Department from "./database/models/department";
-
 const port = Number(process.env.PORT) || 4000;
 
 /**
@@ -53,10 +51,6 @@ if (require.main === module) {
     .start()
     .then(console.info)
     .catch(console.error);
-
-  const dep = new Department();
-  dep.name = "Test";
-  dep.save();
 }
 
 export default apiServer;
