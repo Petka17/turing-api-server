@@ -1,34 +1,37 @@
-// import {
-//   AllowNull,
-//   Column,
-//   DataType,
-//   Model,
-//   PrimaryKey,
-//   Table,
-//   Unique
-// } from "sequelize-typescript";
+import {
+  ObjectType,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany
+} from "typeorm";
 
-// @Table({
-//   timestamps: false,
-//   tableName: "department"
-// })
-// export default class Department extends Model<Department> {
-//   @PrimaryKey
-//   @Column
-//   public department_id?: number;
+import Category from "./category";
 
-//   @AllowNull(false)
-//   @Unique
-//   @Column(DataType.STRING(100))
-//   public name?: string;
+// CREATE TABLE `department` (
+//   `department_id` INT            NOT NULL  AUTO_INCREMENT,
+//   `name`          VARCHAR(100)   NOT NULL,
+//   `description`   VARCHAR(1000),
+//   PRIMARY KEY  (`department_id`)
+// )
+@Entity({ name: "department" })
+export default class Department {
+  @PrimaryGeneratedColumn()
+  public department_id?: number;
 
-//   @Column(DataType.STRING(1000))
-//   public description?: string;
-// }
+  @Column("timestamp", { default: (): string => "CURRENT_TIMESTAMP" })
+  public created_at?: string;
 
-// // CREATE TABLE `department` (
-// //   `department_id` INT            NOT NULL  AUTO_INCREMENT,
-// //   `name`          VARCHAR(100)   NOT NULL,
-// //   `description`   VARCHAR(1000),
-// //   PRIMARY KEY  (`department_id`)
-// // ) ENGINE=MyISAM;
+  @Column("varchar", { length: 100, nullable: false, unique: true })
+  public name?: string;
+
+  @Column("varchar", { length: 1000, nullable: true })
+  public description?: number;
+
+  @OneToMany(
+    (): ObjectType<Category> => Category,
+    (cat: Category): Department | undefined => cat.department,
+    { cascade: ["remove"] }
+  )
+  public category?: Category;
+}
