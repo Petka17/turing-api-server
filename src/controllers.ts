@@ -1,3 +1,3 @@
-import hello from "./modules/hello/controller";
+import hello from "./routes/hello";
 
 export default [hello];
