@@ -1,13 +1,8 @@
-import { GET, Path, PathParam } from "typescript-rest";
+import { Errors, GET, Path, PathParam } from "typescript-rest";
 import { IsLong, Response, Tags } from "typescript-rest-swagger";
 
-import { CustomError } from "./common";
-
-interface DepartmentResponse {
-  department_id: number;
-  name: string;
-  description: string;
-}
+import { CustomError, DepartmentResponse } from "../interfaces";
+import { getAllDepartments, getDepartmentById } from "../services/department";
 
 @Tags("departments")
 @Path("/departments")
@@ -18,15 +13,8 @@ class DepartmentsController {
    */
   @Response<CustomError>(400, "Return a error object")
   @GET
-  public list(): DepartmentResponse[] {
-    return [
-      {
-        department_id: 1,
-        name: "Regional",
-        description:
-          "Proud of your country? Wear a T-shirt with a national symbol stamp!"
-      }
-    ];
+  public async list(): Promise<DepartmentResponse[]> {
+    return await getAllDepartments();
   }
 
   /**
@@ -34,18 +22,26 @@ class DepartmentsController {
    * @summary Get Department by ID
    * @param departmentId ID of Department
    */
-  @Response<CustomError>(400, "Return a error object")
+  @Response<CustomError>(400, "The ID is not a number.")
+  @Response<CustomError>(404, "Doesn't exist department with this ID")
   @Path(":department_id")
   @GET
-  public detail(
+  public async detail(
     @PathParam("department_id") @IsLong departmentId: number
-  ): DepartmentResponse {
-    return {
-      department_id: 1,
-      name: "Regional",
-      description:
-        "Proud of your country? Wear a T-shirt with a national symbol stamp!"
-    };
+  ): Promise<DepartmentResponse> {
+    if (isNaN(departmentId)) {
+      throw new Errors.BadRequestError("DEP_01: The ID is not a number.");
+    }
+
+    const dep: DepartmentResponse | undefined = await getDepartmentById(
+      departmentId
+    );
+
+    if (dep) return dep;
+
+    throw new Errors.NotFoundError(
+      `DEP_02: Doesn't exist department with this ID: ${departmentId}`
+    );
   }
 }
 

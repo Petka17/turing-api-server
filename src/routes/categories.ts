@@ -1,22 +1,12 @@
 import { GET, Path, PathParam, QueryParam } from "typescript-rest";
 import { IsInt, IsLong, Response, Tags } from "typescript-rest-swagger";
 
-import { CustomError } from "./common";
-
-interface CategoryShortResponse {
-  category_id: number;
-  name: string;
-  department_id: number;
-}
-
-interface CategoryResponse extends CategoryShortResponse {
-  description: string;
-}
-
-interface CategoryListResponse {
-  count: number;
-  rows: CategoryResponse[];
-}
+import {
+  CategoryListResponse,
+  CategoryResponse,
+  CategoryShortResponse,
+  CustomError
+} from "../interfaces";
 
 @Tags("categories")
 @Path("/categories")
