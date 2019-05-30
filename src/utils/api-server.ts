@@ -12,7 +12,7 @@ class ApiServer<T> {
 
   /**
    * Create new server
-   * @param appInit application with routes
+   * @param app application with routes
    * @param port a port to listen to
    */
   public constructor(app: T, port: number) {
@@ -32,23 +32,11 @@ class ApiServer<T> {
   }
 
   /**
-   * Config port
+   * Change port
    * @param port
    */
   public configPort(port: number): void {
     this.port = port;
-  }
-
-  /**
-   * Init Routes
-   * @param controllers an array of functions that take an application and setup §routes on it
-   */
-  public initRoutes(controllers: Function[]): void {
-    controllers.forEach(
-      (controller: Function): void => {
-        controller(this.app);
-      }
-    );
   }
 
   /**

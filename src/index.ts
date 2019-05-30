@@ -1,22 +1,21 @@
 import express from "express";
-import { createConnection } from "typeorm";
 
-import controllers from "./controllers";
-import Department from "./database/models/department";
+import { initConnection } from "./database/connection";
+import { applyFn } from "./routes";
 import ApiServer from "./utils/api-server";
+import graceful from "./utils/graceful";
 
 const port = Number(process.env.PORT) || 4000;
 
 /**
- * Setup the app
+ * Create app
  */
 const app = express();
 
-controllers.forEach(
-  (controller: Function): void => {
-    controller(app);
-  }
-);
+/**
+ * Init routes
+ */
+applyFn(app);
 
 /**
  * Init server
@@ -26,31 +25,11 @@ const apiServer: ApiServer<express.Express> = new ApiServer(app, port);
 /**
  * Setup graceful stop
  */
-type Sig = "SIGINT" | "SIGTERM" | "SIGHUP";
-const termSignals: Sig[] = ["SIGINT", "SIGTERM", "SIGHUP"];
-termSignals.forEach(
-  (sig: Sig): void => {
-    process.on(
-      sig,
-      /* istanbul ignore next */
-      (): void => {
-        console.log(`\nGracefully shutting down server after ${sig}...`);
-        apiServer.stop();
-        process.exit(0);
-      }
-    );
-  }
-);
+graceful(apiServer);
 
 /* istanbul ignore next */
 const main = async (): Promise<string> => {
-  const dep: Department = new Department();
-  dep.name = "Test3";
-  dep.description = "description";
-  const connection = await createConnection();
-  try {
-    await connection.manager.save(dep);
-  } catch (e) {}
+  await initConnection();
   return await apiServer.start();
 };
 

@@ -15,8 +15,6 @@ test.only("Check server start/stop", async (done): Promise<void> => {
 
   server.configPort(port);
 
-  server.initRoutes([(): void => {}]);
-
   expect(server.status()).toEqual("Server is stopped");
 
   await server.start();
