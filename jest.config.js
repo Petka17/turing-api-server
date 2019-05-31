@@ -4,6 +4,11 @@ module.exports = {
     "^.+\\.ts$": "ts-jest"
   },
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
-  coveragePathIgnorePatterns: ["/migrations/"],
+  coveragePathIgnorePatterns: [
+    "/migrations/",
+    "/models/",
+    "src/index.ts",
+    "src/utils/graceful.ts"
+  ],
   testEnvironment: "node"
 };
