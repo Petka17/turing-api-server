@@ -14,7 +14,7 @@ class DepartmentsController {
   @Response<CustomError>(400, "Return a error object")
   @GET
   public async list(): Promise<DepartmentResponse[]> {
-    return await getAllDepartments();
+    return getAllDepartments();
   }
 
   /**

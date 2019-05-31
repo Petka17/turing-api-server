@@ -1,13 +1,13 @@
 import http from "http";
 import tcpPortUsed from "tcp-port-used";
 
-import ApiServer from "../api-server";
+import ApiServer from "../../src/utils/api-server";
 
 const port = 4000;
 
 const url = `http://localhost:${port}`;
 
-test.only("Check server start/stop", async (done): Promise<void> => {
+test("Check server start/stop", async (done): Promise<void> => {
   const server: ApiServer<http.Server> = new ApiServer(
     http.createServer(),
     port
