@@ -7,10 +7,17 @@ const server = createServer();
 /**
  * Setup graceful stop
  */
-graceful(server);
 
 const main = async (): Promise<string> => {
-  await initConnection();
+  const dbConnect = await initConnection();
+
+  graceful({
+    stop(): void {
+      dbConnect.close();
+      server.stop();
+    }
+  });
+
   return await server.start();
 };
 

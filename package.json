@@ -10,7 +10,9 @@
   "scripts": {
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts",
-    "test": "jest",
+    "test:db": "dotenv -e test/.test.env -- docker-compose -f test/docker-compose.test.yml up --force-recreate -d",
+    "test": "dotenv -e test/.test.env -- jest",
+    "test:watch": "dotenv -e test/.test.env -- jest --watch",
     "test:coverage": "jest --coverage",
     "mig:gen": "ts-node ./node_modules/.bin/typeorm migration:generate",
     "mig:run": "ts-node ./node_modules/.bin/typeorm migration:run",
@@ -49,6 +51,7 @@
     "@types/tcp-port-used": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "dotenv-cli": "^2.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
