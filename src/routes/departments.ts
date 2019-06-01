@@ -2,7 +2,7 @@ import { Errors, GET, Path, PathParam } from "typescript-rest";
 import { IsLong, Response, Tags } from "typescript-rest-swagger";
 
 import { CustomError, DepartmentResponse } from "../interfaces";
-import { getAllDepartments, getDepartmentById } from "../services/department";
+import { getAllDepartments, getDepartmentById } from "../services/departments";
 
 @Tags("departments")
 @Path("/departments")

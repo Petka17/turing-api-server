@@ -2,7 +2,6 @@ import express = require("express");
 import { Errors } from "typescript-rest";
 
 // https://github.com/thiagobustamante/typescript-rest/issues/16#issuecomment-31480729
-/* istanbul ignore next */
 export default (
   err: any,
   _: express.Request,

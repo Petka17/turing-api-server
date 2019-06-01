@@ -7,6 +7,7 @@ import {
   CategoryShortResponse,
   CustomError
 } from "../interfaces";
+import { getCategories } from "../services/categories";
 
 @Tags("categories")
 @Path("/categories")
@@ -24,23 +25,12 @@ class CategoriesController {
   )
   @Response<CustomError>(400, "Return a error object")
   @GET
-  public list(
-    @QueryParam("order") order?: string,
-    @QueryParam("page") @IsInt page?: number,
-    @QueryParam("limit") @IsInt limit?: number
-  ): CategoryListResponse {
-    return {
-      count: 40,
-      rows: [
-        {
-          category_id: 1,
-          name: "French",
-          description:
-            "The French have always had an eye for beauty. One look at the T-shirts below and you'll see that same appreciation has been applied abundantly to their postage stamps. Below are some of our most beautiful and colorful T-shirts, so browse away! And don't forget to go all the way to the bottom - you don't want to miss any of them!",
-          department_id: 1
-        }
-      ]
-    };
+  public async list(
+    @QueryParam("page") @IsInt page: number = 1,
+    @QueryParam("limit") @IsInt limit: number = 20,
+    @QueryParam("order") order: string = ""
+  ): Promise<CategoryListResponse> {
+    return getCategories(page, limit, order);
   }
 
   /**

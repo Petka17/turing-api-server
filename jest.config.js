@@ -3,12 +3,13 @@ module.exports = {
   transform: {
     "^.+\\.ts$": "ts-jest"
   },
+  globalTeardown: "<rootDir>/test/teardown.ts",
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   coveragePathIgnorePatterns: [
-    "/migrations/",
-    "/models/",
     "src/index.ts",
-    "src/utils/graceful.ts"
+    "src/utils/graceful.ts",
+    "src/utils/errorHandler.ts",
+    "src/database"
   ],
   testEnvironment: "node"
 };
