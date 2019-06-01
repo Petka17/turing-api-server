@@ -13,7 +13,7 @@
     "test:env": "dotenv -e test/.test.env --",
     "test:db:start": "yarn test:env docker-compose -f test/docker-compose.test.yml up --force-recreate -d",
     "test:db:stop": "yarn test:env docker-compose -f test/docker-compose.test.yml down",
-    "test": "yarn test:env jest --runInBand --verbose",
+    "test": "yarn test:env jest --runInBand --verbose --forceExit --detectOpenHandles",
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage",
     "mig:gen": "ts-node ./node_modules/.bin/typeorm migration:generate",

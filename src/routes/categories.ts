@@ -26,9 +26,9 @@ class CategoriesController {
   @Response<CustomError>(400, "Return a error object")
   @GET
   public async list(
-    @QueryParam("page") @IsInt page: number = 1,
-    @QueryParam("limit") @IsInt limit: number = 20,
-    @QueryParam("order") order: string = ""
+    @QueryParam("page") @IsInt page?: number,
+    @QueryParam("limit") @IsInt limit?: number,
+    @QueryParam("order") order?: string
   ): Promise<CategoryListResponse> {
     return getCategories(page, limit, order);
   }

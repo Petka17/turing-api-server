@@ -37,10 +37,8 @@ beforeAll(
           description: `${depDesc} ${depIds[i]}`
         })
       );
-
       await depRepo.save(deps[i]);
     }
-
     catRepo = await getRepository(Category);
     // TODO: refactor this ugly test data creation
     for (let i in catIds) {
@@ -52,6 +50,7 @@ beforeAll(
         })
       );
     }
+
     done();
   }
 );
@@ -83,52 +82,3 @@ test("Get category list", async (done): Promise<void> => {
 
   done();
 });
-
-// test("Get one department", async (done): Promise<void> => {
-//   const id = 2;
-//   const response = await request(app).get(`/departments/${id}`);
-
-//   expect([response.status, response.body]).toEqual([
-//     200,
-//     {
-//       department_id: id,
-//       name: `${name} ${id}`,
-//       description: `${desc} ${id}`
-//     }
-//   ]);
-
-//   done();
-// });
-
-// test("Get one department with non-existing id", async (done): Promise<void> => {
-//   const id = 99;
-//   const response = await request(app).get(`/departments/${id}`);
-
-//   expect([response.status, response.body]).toEqual([
-//     404,
-//     {
-//       error: {
-//         status: 404,
-//         message: `DEP_02: Doesn't exist department with this ID: ${id}`
-//       }
-//     }
-//   ]);
-
-//   done();
-// });
-
-// test("Get one department with non-number id", async (done): Promise<void> => {
-//   const response = await request(app).get(`/departments/id`);
-
-//   expect([response.status, response.body]).toEqual([
-//     400,
-//     {
-//       error: {
-//         status: 400,
-//         message: "DEP_01: The ID is not a number."
-//       }
-//     }
-//   ]);
-
-//   done();
-// });

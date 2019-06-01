@@ -54,6 +54,8 @@ export const initConnection = async (): Promise<Connection> => {
 
 export const getConnection = async (): Promise<Connection> => {
   if (!_connection) await initConnection();
+  if (!_connection.isConnected) await _connection.connect();
+
   return _connection;
 };
 

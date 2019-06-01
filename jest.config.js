@@ -3,6 +3,7 @@ module.exports = {
   transform: {
     "^.+\\.ts$": "ts-jest"
   },
+  testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
   globalTeardown: "<rootDir>/test/teardown.ts",
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   coveragePathIgnorePatterns: [
