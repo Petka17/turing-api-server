@@ -13,5 +13,5 @@ services:
     volumes:
       - /var/lib/mysql
     ports:
-      - "3306:${DB_PORT}"
+      - "${DB_PORT}:3306"
  
