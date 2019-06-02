@@ -14,4 +14,19 @@ services:
       - /var/lib/mysql
     ports:
       - "${DB_PORT}:3306"
+  
+  shop-api:
+    image: node:10.15.1-slim
+    command: yarn test:coverage
+    working_dir: /usr/src
+    environment:
+      DB_HOST: shop-db
+      DB_PORT: 3306
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - /Users/petr/code/projects/turing/api-server:/usr/src
+    depends_on:
+      - shop-db
  
