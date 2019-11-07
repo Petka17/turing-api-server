@@ -82,3 +82,27 @@ test("Get category list", async (done): Promise<void> => {
 
   done();
 });
+
+test("Do not do thing like this one", (done): void => {
+  let errors = [];
+
+  // init `a` and `b`
+
+  try {
+    expect(a).toBe(true);
+  } catch (e) {
+    errors.push(e.message);
+  }
+
+  try {
+    expect(b).toBe(false);
+  } catch (e) {
+    errors.push(e.message);
+  }
+
+  if (errors.length > 0) {
+    done.fail(errors.join("\n"));
+  } else {
+    done();
+  }
+});

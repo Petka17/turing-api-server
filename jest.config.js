@@ -1,16 +1,18 @@
 module.exports = {
+  rootDir: "./src",
+  roots: ["<rootDir>/../test"],
   moduleFileExtensions: ["js", "ts"],
   transform: {
     "^.+\\.ts$": "ts-jest"
   },
   testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
-  globalTeardown: "<rootDir>/test/teardown.ts",
+  globalTeardown: "<rootDir>/../test/teardown.ts",
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   coveragePathIgnorePatterns: [
-    "src/index.ts",
-    "src/utils/graceful.ts",
-    "src/utils/errorHandler.ts",
-    "src/database"
+    "<rootDir>/index.ts",
+    "<rootDir>/utils/graceful.ts",
+    "<rootDir>/utils/errorHandler.ts",
+    "<rootDir>/database"
   ],
   testEnvironment: "node"
 };

@@ -1,17 +1,12 @@
 version: '3.1'
 
 services:
-  shop-db:
+  main-database:
     image: mariadb:10.4.5 
-    container_name: shop-db
+    container_name: ${DB_HOST}
     restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: topsecret
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-    volumes:
-      - /var/lib/mysql
-    ports:
-      - "${DB_PORT}:3306"
- 
