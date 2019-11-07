@@ -16,13 +16,13 @@ export interface DepartmentResponse {
 }
 
 export interface CategoryShortResponse {
-  category_id: number;
-  name: string;
-  department_id: number;
+  category_id?: number;
+  name?: string;
+  department_id?: number;
 }
 
 export interface CategoryResponse extends CategoryShortResponse {
-  description: string;
+  description?: string;
 }
 
 export interface CategoryListResponse {

@@ -37,4 +37,7 @@ export default class Category {
   )
   @JoinColumn({ name: "department_id" })
   public department?: Department;
+
+  @Column("int", { nullable: false })
+  public department_id?: number;
 }

@@ -7,7 +7,7 @@ import { DepartmentResponse } from "../interfaces";
 export const getAllDepartments = async (): Promise<DepartmentResponse[]> => {
   const repo: Repository<Department> = await getRepository(Department);
 
-  return await repo.find({
+  return repo.find({
     select: ["department_id", "name", "description"]
   });
 };
@@ -17,7 +17,7 @@ export const getDepartmentById = async (
 ): Promise<DepartmentResponse | undefined> => {
   const repo: Repository<Department> = await getRepository(Department);
 
-  return await repo.findOne(departmentId, {
+  return repo.findOne(departmentId, {
     select: ["department_id", "name", "description"]
   });
 };

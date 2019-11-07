@@ -10,7 +10,6 @@ export default (
 ): void => {
   // https://github.com/thiagobustamante/typescript-rest/issues/87#issue-423333412
   if (err instanceof Errors.HttpError) {
-    console.log(err);
     if (res.headersSent) {
       // important to allow default error handler to close connection if headers already sent
       return next(err);

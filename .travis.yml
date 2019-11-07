@@ -11,4 +11,6 @@ cache:
 install:
   - yarn
 script:
+  - yarn test:db:start
   - yarn test:coverage
+  - yarn test:db:stop

@@ -68,6 +68,13 @@ class ApiServer<T> {
   }
 
   /**
+   * Return app. Use in tests
+   */
+  public getApp(): T {
+    return this.app;
+  }
+
+  /**
    * Check if server is running
    */
   private isListening(): boolean {
